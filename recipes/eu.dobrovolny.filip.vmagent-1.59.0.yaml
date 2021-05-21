@@ -1,0 +1,77 @@
+---
+RecipeFormatVersion: 2020-01-25
+ComponentName: eu.dobrovolny.filip.vmagent
+ComponentDescription: Victoria Metrics vmagent
+ComponentPublisher: Filip Dobrovolny (dobrovolny.filip@gmail.com)
+ComponentVersion: '1.59.0'
+ComponentConfiguration:
+  DefaultConfiguration:
+    binary_location: "<FILL_BINARY_LOCATION_HERE>"
+Manifests:
+  - Platform:
+      os: linux
+      architecture: amd64
+    Artifacts:
+      - URI: s3://{configuration:/binary_location}/vmagent-linux-amd64-prod
+        Permission:
+          Read: "OWNER"
+          Execute: "OWNER"
+      - URI: s3://{configuration:/config_zip_location}
+        Unarchive: "ZIP"
+        Permission:
+          Read: "OWNER"
+          Execute: "NONE"
+    Lifecycle:
+      startup:
+        script: {artifacts:path}/vmagent-linux-amd64-prod {configuration:/args}
+
+  - Platform:
+    os: linux
+    architecture: aarch64
+    Artifacts:
+      - URI: s3://{configuration:/binary_location}/vmagent-linux-arm64-prod
+        Permission:
+          Read: "OWNER"
+          Execute: "OWNER"
+      - URI: s3://{configuration:/config_zip_location}
+        Unarchive: "ZIP"
+        Permission:
+          Read: "OWNER"
+          Execute: "NONE"
+    Lifecycle:
+      startup:
+        script: { artifacts:path }/vmagent-linux-arm64-prod {configuration:/args}
+
+  - Platform:
+    os: linux
+    architecture: arm
+    Artifacts:
+      - URI: s3://{configuration:/binary_location}/vmagent-linux-arm-prod
+        Permission:
+          Read: "OWNER"
+          Execute: "OWNER"
+      - URI: s3://{configuration:/config_zip_location}
+        Unarchive: "ZIP"
+        Permission:
+          Read: "OWNER"
+          Execute: "NONE"
+    Lifecycle:
+      startup:
+        script: { artifacts:path }/vmagent-linux-arm-prod {configuration:/args}
+
+  - Platform:
+    os: windows
+    architecture: amd64
+    Artifacts:
+      - URI: s3://{configuration:/binary_location}/vmagent-windows-amd64-prod
+        Permission:
+          Read: "OWNER"
+          Execute: "OWNER"
+      - URI: s3://{configuration:/config_zip_location}
+        Unarchive: "ZIP"
+        Permission:
+          Read: "OWNER"
+          Execute: "NONE"
+    Lifecycle:
+      startup:
+        script: { artifacts:path }/vmagent-windows-amd64-prod {configuration:/args}
